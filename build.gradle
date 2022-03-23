@@ -1,0 +1,120 @@
+buildscript {
+    dependencies {
+        classpath(
+                'net.sf.proguard:proguard-gradle:6.0.3'
+        )
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+    id 'java'
+}
+
+group 'com.kusaanko.github.atomcamclient'
+version '0.2.0'
+
+sourceCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20211205'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.10.0'
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform
+    implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.10.0'
+    // https://mvnrepository.com/artifact/org.bytedeco/ffmpeg
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'windows-x86'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'windows-x86_64'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'macosx-x86_64'
+    //implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'macosx-arm64'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'linux-x86'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'linux-x86_64'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'linux-ppc64le'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'linux-arm64'
+    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.4-1.5.6', classifier: 'linux-armhf'
+
+    implementation platform("org.lwjgl:lwjgl-bom:3.3.0")
+
+    implementation "org.lwjgl:lwjgl"
+    implementation "org.lwjgl:lwjgl-assimp"
+    implementation "org.lwjgl:lwjgl-nfd"
+    implementation "org.lwjgl:lwjgl-openal"
+    implementation "org.lwjgl:lwjgl-opengl"
+    implementation "org.lwjgl:lwjgl-stb"
+    String[] platforms = new String[]{"natives-linux", "natives-macos", "natives-windows", "natives-windows-x86"}
+    for(String platform : platforms) {
+        for (String pkg : implementationNativesLwjgl(platform)) {
+            implementation pkg
+        }
+    }
+    implementation "org.lwjglx:lwjgl3-awt:0.1.8"
+    implementation "org.joml:joml:1.10.3"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+repositories {
+    mavenCentral()
+}
+
+static String[] implementationNativesLwjgl(String platform) {
+    return new String[]{"org.lwjgl:lwjgl::$platform",
+            "org.lwjgl:lwjgl-assimp::$platform",
+            "org.lwjgl:lwjgl-nfd::$platform",
+            "org.lwjgl:lwjgl-openal::$platform",
+            "org.lwjgl:lwjgl-opengl::$platform",
+            "org.lwjgl:lwjgl-stb::$platform"}
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.github.kusaanko.atomcamclient.Main'
+    }
+    // Fat Jarを作る
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
+task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
+
+    def javaHome = System.getProperty('java.home')
+
+    // Shrink対象のJAR
+    injars jar.archivePath
+
+    libraryjars files(
+            "${javaHome}/lib/rt.jar",  // Java SEランタイム
+            "${javaHome}/lib/jce.jar"  // cryptoモジュール
+    )
+
+    // Fat JARを使わない場合、依存ライブラリーをlibraryjarsに追加する
+//    libraryjars configurations.compile.files
+
+    // 出力先 お好みでどうぞ
+    outjars("${jar.destinationDir}/proguarded.jar")
+
+    // Shrinkしないクラス
+    keep("public class ${jar.manifest.attributes['Main-Class']} { public static void main(java.lang.String[]); }")
+
+    dontwarn("ch.qos.logback.**")
+    dontwarn('afu.org.checkerframework.**')
+    dontwarn("org.checkerframework.**")
+    dontwarn('org.slf4j.**')
+}

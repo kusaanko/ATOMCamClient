@@ -1,0 +1,67 @@
+package com.github.kusaanko.atomcamclient.api.p2p.command;
+
+public class CommandNumberContact {
+
+    public static final String NUM_VIDEO_CHANNEL = "1";
+    public static final String NUM_AUDIO_CHANNEL = "2";
+    public static final String NUM_SPEAK_CHANNEL = "3";
+    public static final String NUM_RATIO = "4";
+    public static final String NUM_BIT = "5";
+    public static final String NUM_NIGHT_VISION = "6";
+    public static final String NUM_WATERMARK_SWITCH = "7";
+    public static final String NUM_SMART_FRAME = "8";
+    public static final String NUM_MOBILE_ALARM = "9";
+    public static final String NUM_MOBILE_ALARM_SENS = "10";
+    public static final String NUM_SOUND_ALARM = "11";
+    public static final String NUM_SOUND_ALARM_SENS = "12";
+    public static final String NUM_SMOKE_ALARM = "13";
+    public static final String NUM_CO_ALARM = "14";
+    public static final String NUM_REGIONAL_ALARM = "15";
+    public static final String NUM_REGIONAL_X = "16";
+    public static final String NUM_REGIONAL_Y = "17";
+    public static final String NUM_REGIONAL_W = "18";
+    public static final String NUM_REGIONAL_H = "19";
+    public static final String NUM_ALARM_PERIOD_START = "20";
+    public static final String NUM_ALARM_PERIOD_DURATION = "21";
+    public static final String NUM_INDICATOR_LIGHT = "22";
+    public static final String NUM_RECORD_SOUND = "23";
+    public static final String NUM_IMG_HORIZONTAL_ROTATE = "24";
+    public static final String NUM_IMG_VERTICAL_ROTATE = "25";
+    public static final String NUM_SD_CARD_STATUS = "26";
+    public static final String NUM_SD_CARD_REMAINING_CAPACITY = "27";
+    public static final String NUM_SD_CARD_RESIDUAL_CAPACITY = "28";
+    public static final String NUM_RECORD_STATUS = "29";
+    public static final String NUM_TIME_ZONE_OFFSET = "30";
+    public static final String NUM_DELAY_CAMERA_TASK_STATUS = "31";
+    public static final String NUM_Firmware_version = "32";
+    public static final String NUM_HARDWARE_VERSION = "33";
+    public static final String NUM_SIGNAL_INTENSITY = "34";
+    public static final String NUM_CAMERA_TIME_STAMP = "35";
+    public static final String NUM_NIGHT_VISION_SWITCH = "36";
+    public static final String NIGHT_TIME_WATERMARK_SWITCH = "37";
+    public static final String NIGHT_ALARM_REPETITION_PERIOD = "38";
+    public static final String NIGHT_VIDEO_FRAME_RATE = "39";
+    public static final String NUM_NAS_TRANSFERRING_STATUS = "41";
+    public static final String NUM_NAS_CONNECT_STATUS = "42";
+    public static final String NUM_NAS_CONNECT_NAME = "43";
+    public static final String NUM_NAS_CONNECT_DEVICE_IP = "44";
+    public static final String NUM_NAS_CONNECT_STORAGE_PATH = "45";
+    public static final String NUM_NAS_CONNECT_STORAGE_TIME = "46";
+    public static final String NUM_NAS_CONNECT_STORAGE_INTERVAL = "47";
+    public static final String NUM_265_OPEN = "48";
+    public static final String ROTARY_SPEED = "49";
+    public static final String ROTARY_H_ANGLE = "52";
+    public static final String ROTARY_V_ANGLE = "53";
+    public static final String NUM_RSSI_VALUE = "54";
+    public static final String MOTION_TRACK_TYPE = "55";
+    public static final String NUM_STATUS_FOCUS = "56";
+    public static final String NUM_STATUS_CRUISE = "57";
+    public static final String NUM_IS_SUPPORT_MULTIPLE_ALARM_PERIOD = "59";
+    public static final String NUM_NAS_USERNAME = "60";
+    public static final String NUM_NAS_PASSWORD = "61";
+    public static final String NUM_VISION_CONDITIONS = "62";
+    public static final String NUM_AI_SUPPORT_TYPE = "69";
+    public static final String NUM_SIREN_SWITCH_TIME = "71";
+    public static final String NUM_SIREN_SWITCH_TYPE = "70";
+
+}
